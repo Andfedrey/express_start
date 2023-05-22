@@ -110,7 +110,11 @@ router.get('/:id/download', (req, res) => {
   const {id} = req.params;
   const checkId = books.findIndex(el => el.id === id);
   console.log(books)
-  express.static(books[checkId].fileBook + '/public')
+  res.download(__dirname + `/public/books/${books[checkId].fileBook}`, function(err) {
+    if(err) console.log(err)
+    res.status(404)
+    res.json('Ошибка при загрузки файла')
+  })
 })
 
 
