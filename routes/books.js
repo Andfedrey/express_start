@@ -40,13 +40,13 @@ router.post(
     } = req.body;
     const id = uuid()
 
-    const {path} = req.file;
-    if(!path) {
+    const {filename} = req.file;
+    if(!filename) {
       res.status(404)
       res.json('Ошибка при загрузке файла')
     }
 
-    const fileBook = path;
+    const fileBook = filename;
 
     if(id && title && description && authors && favorite && fileCover && fileName) {
       const newBook = new Book(id, title, description, authors, favorite, fileCover, fileName, fileBook)
@@ -109,11 +109,15 @@ router.get('/:id/download', (req, res) => {
   const {books} = info;
   const {id} = req.params;
   const checkId = books.findIndex(el => el.id === id);
-  console.log(books)
-  res.download(__dirname + `/public/books/${books[checkId].fileBook}`, function(err) {
-    if(err) console.log(err)
-    res.status(404)
-    res.json('Ошибка при загрузки файла')
+  const fileName = books[checkId].fileBook
+  res.download(__dirname + '/public/books/' + fileName, function(err) {
+    if(err) {
+      console.log(err)
+      res.status(404)
+      res.json('Ошибка при загрузки файла')
+    } else {
+      console.log('ok')
+    }
   })
 })
 
