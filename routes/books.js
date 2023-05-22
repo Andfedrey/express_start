@@ -4,6 +4,7 @@ const Book = require('../data/book')
 const info = require('../data/info')
 const fileMulter = require('../middleware/file')
 const router = express.Router()
+const path = require('path');
 
 router.get('/', (req, res) => {
   const {books} = info;
@@ -110,7 +111,9 @@ router.get('/:id/download', (req, res) => {
   const {id} = req.params;
   const checkId = books.findIndex(el => el.id === id);
   const fileName = books[checkId].fileBook
-  res.download(__dirname + '/public/books/' + fileName, function(err) {
+  
+  const road = path.dirname(__dirname)
+  res.download(road + "/public/books/" + fileName, function(err) {
     if(err) {
       console.log(err)
       res.status(404)
