@@ -11,7 +11,6 @@ router.get('/', (req, res) => {
   res.status(200)
   res.json(books)
 })
-
 router.get('/:id', (req, res) => {
   const {books} = info;
   const {id} = req.params;
@@ -25,7 +24,6 @@ router.get('/:id', (req, res) => {
     res.json('Книга не найдена')
   }
 })
-
 router.post(
   '/', 
   fileMulter.single('fileBook'),
@@ -59,7 +57,6 @@ router.post(
       res.json('Новая книга не была добавлена')
     }
 })
-
 router.put('/:id', (req, res) => {
   const {books} = info;
   const {id} = req.params;
@@ -90,7 +87,6 @@ router.put('/:id', (req, res) => {
     res.json('Книга по данному Id не найдена')
   }
 })
-
 router.delete('/:id', (req, res) => {
   const {books} = info;
   const {id} = req.params;
@@ -105,21 +101,18 @@ router.delete('/:id', (req, res) => {
     res.json('Книга по данному Id не найдена')
   }
 })
-
 router.get('/:id/download', (req, res) => {
   const {books} = info;
   const {id} = req.params;
   const checkId = books.findIndex(el => el.id === id);
-  const fileName = books[checkId].fileBook
-  
+  const fileName = books[checkId].fileBook``
   const road = path.dirname(__dirname)
-  res.download(road + "/public/books/" + fileName, function(err) {
+  
+  res.download(road + "/public/books/" + fileName, `${books[checkId].title}.txt`, (err) => {
     if(err) {
-      console.log(err)
-      res.status(404)
-      res.json('Ошибка при загрузки файла')
+      res.status(404).json(`Ошибка при загрузки файла - ${err}`)
     } else {
-      console.log('ok')
+      console.log('Файл загружен')
     }
   })
 })
