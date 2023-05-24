@@ -1,0 +1,53 @@
+<form method="POST" class="mt-5" enctype="multipart/form-data">
+  <div class="form-group">
+      <label for="inputTitle">Заголовок</label>
+      <input type="text"
+            value=""
+            name="title"
+            class="form-control"
+            placeholder="название книги"
+            id="inputTitle">
+  </div>
+
+  <div class="form-group">
+    <label for="inputAuthors">Автор</label>
+    <input type="text"
+          value=""
+          name="authors"
+          class="form-control"
+          placeholder="имя автора"
+          id="inputAuthors">
+</div>
+
+<div class="form-group">
+    <label for="inputFileCover">Обложка</label>
+    <input type="text"
+          value=""
+          name="fileCover"
+          class="form-control"
+          id="inputFileCover"
+          placeholder="адресс изображения"
+          >
+          
+</div>
+
+  <div class="form-group">
+      <label for="inputDescription">Описание</label>
+      <textarea
+              rows="3"
+              name="description"
+              class="form-control"
+              id="inputDescription"
+      ></textarea>
+  </div>
+
+
+  <div class="form-group">
+    <label for="files" class="form-label">Загрузить книгу</label>
+    <input class="form-control" type="file" id="files" name="fileBook"  multiple>
+  </div>
+
+  <div class="form-group text-right ">
+      <button type="submit" class="btn btn-primary">Сохранить</button>
+  </div>
+</form>
