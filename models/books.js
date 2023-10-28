@@ -3,23 +3,22 @@ const {Schema, model} = require('mongoose')
 const BookShema = new Schema({
     id: {
         type: String,
-        requred: true
+        required : true
     },
     title: {
         type: String,
-        requred: true
+        required : true
     },
     description: {
         type: String,
-        requred: true
+        required : true
     },
     authors: {
         type: String,
-        requred: true
+        required : true
     },
     favorite: {
         type: String,
-       
         default: 'yes'
     },
     fileCover: {
@@ -29,6 +28,9 @@ const BookShema = new Schema({
     fileName: {
         type: String,
        
+    },
+    fileBook: {
+        type: String
     }
 })
 
