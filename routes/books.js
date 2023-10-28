@@ -6,6 +6,7 @@ const fileMulter = require('../middleware/file')
 const router = express.Router()
 const path = require('path');
 const Books = require('../models/books')
+const books = require('../models/books')
 
 router.get('/', async (req, res) => {
   const {books} = info;
@@ -33,15 +34,16 @@ router.post('/', fileMulter.single('fileBook'), async (req, res) => {
   const {title, description, authors, favorite, fileCover, fileName} = req.body;
   const id = uuid()
   const fileBook = req?.file?.filename ?? '';
-  const newBook = new Book({id, title, description, authors,favorite: favorite || 'yes', fileCover: fileCover || "", fileName: fileName || '', fileBook})
-
+  const newBook = new Books({id, title, description, authors, favorite, fileCover, fileName, fileBook})
   if(title, description, authors) {
     try {
       await newBook.save()
       res.status(201).json(newBook)
     } catch (error) {
-      res.status(500).json(error)
+      res.status(404).json(error)
     }
+  } else {
+    res.status(500)
   }
 })
 
@@ -51,14 +53,14 @@ router.put('/:id', async(req, res) => {
   const {title, description, authors, favorite, fileCover, fileName} = req.body;
   if(title, description, authors) {
     try {
-      await Book.findByIdAndUpdate(id, {title, description, authors, favorite: favorite || 'yes', fileCover: fileCover || "", fileName: fileName || ''});
+      await Books.findByIdAndUpdate(id, {title, description, authors, favorite: favorite || 'yes', fileCover, fileName});
       res.redirect(`/api/books/${id}`)
     } catch (error) {
       res.status(404).json(error)
     }
+  } else {
+    res.status(500)
   }
-
-  res.status(500)
 })
 
 router.delete('/:id', async(req, res) => {
