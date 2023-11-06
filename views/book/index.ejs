@@ -2,7 +2,7 @@
 <%- include('../port/menu') %>
 
 <h1><%= title %></h1>
-<a class="btn btn-sm btn-primary" href="/api/books/create">Добавить книгу</a>
+<a class="btn btn-sm btn-primary" href="/api/books/addBook">Добавить книгу</a>
 
         <table class="table table-striped table-sm  mt-3">
             <thead>
@@ -23,13 +23,13 @@
                         <td><%= el.authors %></td>
                         <td><%= el.authors %></td>
                         <td class="text-right">
-                            <a class="btn btn-sm btn-success" href="/api/books/<%= el.id %>">
+                            <a class="btn btn-sm btn-success" href="/api/books/<%= el._id %>">
                                 <i class="fa fa-eye" aria-hidden="true"></i>
                             </a>
-                            <a class="btn btn-sm btn-primary" href="/api/books/update/<%= el.id %>">
+                            <a class="btn btn-sm btn-primary" href="/api/books/updateBook/<%= el._id %>">
                                 <i class="fa fa-pencil" aria-hidden="true"></i>
                             </a>
-                            <form action="/api/books/delete/<%= el.id %>" method="GET" class="d-inline">
+                            <form action="/api/books/<%= el._id %>?_method=DELETE" method="POST" class="d-inline">
                                 <button class="btn btn-sm btn-danger">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </button>

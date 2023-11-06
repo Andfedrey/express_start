@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/Books');
+const methodOverride = require('method-override')
 const errorMiddleware = require('./middleware/error')
 
 const booksRouter = require('./routes/books')
@@ -9,6 +9,7 @@ const indexRouter = require('./routes/index')
 
 const app = express()
 app.use(express.json())
+app.use(methodOverride('_method'))
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
