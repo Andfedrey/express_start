@@ -6,7 +6,6 @@ const fileMulter = require('../middleware/file')
 const router = express.Router()
 const path = require('path');
 const Books = require('../models/books')
-const books = require('../models/books')
 
 router.get('/', async (req, res) => {
   const {books} = info;

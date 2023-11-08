@@ -1,0 +1,22 @@
+<%- include('../port/layout-start', {title: title}) %>
+<%- include('../port/menu') %>
+
+<div style="margin-top: 20px" >
+
+    <div class="form-floating mb-2">
+        <input type="text" readonly class="form-control-plaintext" id="floatingEmptyPlaintextInput" placeholder="ID:">
+        <label for="floatingEmptyPlaintextInput">ID:</label>
+      </div>
+      <div class="form-floating mb-2">
+        <input type="text" readonly class="form-control-plaintext" id="floatingEmptyPlaintextInput" placeholder="Username:">
+        <label for="floatingEmptyPlaintextInput">Username:</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="email" readonly class="form-control-plaintext" id="floatingEmptyPlaintextInput" placeholder="Useremail:">
+        <label for="floatingEmptyPlaintextInput">Name:</label>
+      </div>
+      <a href="/logout">Logout</a>
+</div>
+
+
+<%- include('../port/layout-end') %>
