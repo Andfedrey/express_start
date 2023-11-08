@@ -3,19 +3,22 @@
 
 <div style="max-width: 250px; margin-top: 20px" >
 
-    <form>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
-            <label for="floatingInput">User`s name</label>
-          </div>
-          <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-            <label for="floatingPassword">Password</label>
-          </div>
-          <div>
-            <button type="submit" class="btn btn-primary mb-3">Ok</button>
-          </div>
-    </form>
+  <form method="POST" action="/api/user/signup">
+    <h1><%= title %>:</h1>
+      <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">User name:</label>
+          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="name">
+        </div>
+  
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Password:</label>
+          <input type="password" class="form-control" id="exampleFormControlInput1" >
+        </div>
+
+        <div>
+          <button type="submit" class="btn btn-primary mb-3">Ok</button>
+        </div>
+  </form>
 
 </div>
 
