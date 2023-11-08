@@ -32,15 +32,19 @@ app.use('/api/user', userRouter)
 
 const User = require('./models/user')
 
-const verify = (username, password, done) => {
-    User.findOne(username, (err, user) => {
-        if(err) return done(err)
+const verify = async(username, password, done) => {
+    try{
+        const user = await User.findOne({username})
         if(!user) return done(null, false)
         if(user.password !== password) {
             return done(null, false)
         }
         return done(null, user)
-    })
+
+    }catch(err){
+        return done(err)
+    }
+       
 }
 
 const options = {
@@ -54,11 +58,13 @@ passport.serializeUser((user, cb) => {
     cb(null, user.id)
 })
 
-passport.deserializeUser((id, cb) => {
-    User.findById(id, (err, user) => {
-        if(err){return err}
+passport.deserializeUser(async(id, cb) => {
+    try {
+        const user = await User.findById(id)
         cb(null, user)
-    })
+    } catch (error) {
+        return cb(error)
+    }
 })
 
 

@@ -23,10 +23,10 @@ router.get('/signup', (req, res) => {
 
 router.post('/signup', async (req, res) => {
   const {username, password} = req.body;
-  // const checkName = await User.findOne({username})
-  // if(checkName){
-  //   res.redirect('user/signup', {title: 'пользовтель с таким именем уже заргестрирован', user: req.user})
-  // }
+  const checkName = await User.findOne({username})
+  if(checkName){
+    res.redirect('user/signup', {title: 'пользовтель с таким именем уже заргестрирован', user: req.user})
+  }
   const newUser = new User({username, password})
   try{
     console.log('check')
@@ -37,16 +37,14 @@ router.post('/signup', async (req, res) => {
   }
 })
 
-router.get('/me', (req, res) => {
 
-})
 
 
 router.get('/authUser', (req, res) => {
   res.render('user/authentication', {title: 'Autentication user'})
 })
 
-router.get('/profile', 
+router.get('/me', 
   (req, res, next) => {
     if(!req.isAuthenticated()){
       return res.redirect('user/login')
