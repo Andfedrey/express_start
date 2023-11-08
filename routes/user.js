@@ -1,13 +1,48 @@
 const express = require('express');
 const router = express.Router()
-const User = require('../data/user')
 const info = require('../data/info')
+const User = require('../models/user');
+const passport = require('passport');
 
-router.post('/login', (req, res) => {
-  const {id, mail} = req.body;
-  info.user = new User(id, mail)
-  res.status(201)
-  res.json(info.user)
+router.get('/login', (req, res) => {
+  res.render('user/login', {title: 'user login'})
 })
 
+router.post('/login', 
+  passport.authenticate('local', {failureRedirect: '/user/login'}),
+  (req, res) => {
+    console.log('req.user', req.user)
+    res.redirect('/')
+  }
+)
+
+
+router.post('/signup', (req, res) => {
+  
+})
+
+router.get('/me', (req, res) => {
+
+})
+
+
+router.get('/authUser', (req, res) => {
+  res.render('user/authentication', {title: 'Autentication user'})
+})
+
+router.get('/profile', 
+  (req, res, next) => {
+    if(!req.isAuthenticated()){
+      return res.redirect('user/login')
+    }
+    next()
+  },
+  (req, res) => {
+    res.render('user/profile', {title: 'Profile', user:req.user})
+})
+
+router.get('/logout', (req, res) => {
+  req.logOut()
+  res.redirect('/')
+})
 module.exports = router
