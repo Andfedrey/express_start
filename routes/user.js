@@ -3,22 +3,38 @@ const router = express.Router()
 const info = require('../data/info')
 const User = require('../models/user');
 const passport = require('passport');
+const { v4: uuid } = require('uuid')
 
 router.get('/login', (req, res) => {
-  res.render('user/login', {title: 'user login'})
+  res.render('user/login', {title: 'login', user: req.user})
 })
 
 router.post('/login', 
-  passport.authenticate('local', {failureRedirect: '/user/login'}),
+  passport.authenticate('local', {failureRedirect: 'user/login'}),
   (req, res) => {
     console.log('req.user', req.user)
     res.redirect('/')
   }
 )
 
+router.get('/signup', (req, res) => {
+  res.render('user/signup', {title: 'signup', user: req.user})
+})
 
-router.post('/signup', (req, res) => {
-  
+router.post('/signup', async (req, res) => {
+  const {username, password} = req.body;
+  const checkName = await User.findOne({username})
+  if(checkName){
+    res.status(204).redirect('user/signup', {title: 'пользовтель с таким именем уже заргестрирован', user: req.user})
+  }
+  const id = uuid()
+  const newUser = new User({id, username, password})
+  try{
+    await newUser.save()
+    res.status(201).redirect('user/login', {title: 'login', user: req.user})
+  }catch(err){
+    res.status(500).redirect('user/signup', {title: 'signup', user: req.user})
+  }
 })
 
 router.get('/me', (req, res) => {

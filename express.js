@@ -15,7 +15,12 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
 app.use(methodOverride('_method'))
-app.use(session({secret: 'SECRET'}))
+app.use(session({
+    secret: 'SECRET',
+    resave: false,
+    saveUninitialized: true
+  }));
+  
 
 app.use(passport.initialize())
 app.use(passport.session())
@@ -24,10 +29,11 @@ app.use('/', indexRouter)
 app.use('/api/books', booksRouter)
 app.use('/api/user', userRouter)
 
+
 const User = require('./models/user')
 
 const verify = (username, password, done) => {
-    User.findOne({username}, (err, user) => {
+    User.findOne(username, (err, user) => {
         if(err) return done(err)
         if(!user) return done(null, false)
         if(user.password !== password) {
@@ -49,7 +55,7 @@ passport.serializeUser((user, cb) => {
 })
 
 passport.deserializeUser((id, cb) => {
-    User.findById({id}, (err, user) => {
+    User.findById(id, (err, user) => {
         if(err){return err}
         cb(null, user)
     })
@@ -65,6 +71,6 @@ async function start(PORT, UrlDB) {
     }
 }
 
-const UrlDB = process.env.UrlDB;
-const PORT = process.env.PORT || 3000;
+const UrlDB = process.env.UrlDB || 'mongodb://localhost:27017/Books';
+const PORT = process.env.PORT || 3030;
 start(PORT, UrlDB)
