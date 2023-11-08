@@ -23,13 +23,13 @@ router.get('/signup', (req, res) => {
 
 router.post('/signup', async (req, res) => {
   const {username, password} = req.body;
-  const checkName = await User.findOne({username})
-  if(checkName){
-    res.status(204).redirect('user/signup', {title: 'пользовтель с таким именем уже заргестрирован', user: req.user})
-  }
-  const id = uuid()
-  const newUser = new User({id, username, password})
+  // const checkName = await User.findOne({username})
+  // if(checkName){
+  //   res.redirect('user/signup', {title: 'пользовтель с таким именем уже заргестрирован', user: req.user})
+  // }
+  const newUser = new User({username, password})
   try{
+    console.log('check')
     await newUser.save()
     res.status(201).redirect('user/login', {title: 'login', user: req.user})
   }catch(err){
