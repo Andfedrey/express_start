@@ -1,0 +1,48 @@
+<%- include('../port/layout-start', {title: title}) %>
+<%- include('../port/menu') %>
+
+<div style="margin-top: 20px" >
+
+    <div class="input-group mb-2">
+      <span class="input-group-text" id="basic-addon1">ID:</span>
+      <input 
+        type="text" 
+        class="form-control" 
+        placeholder="ID"
+        aria-label="ID"
+        aria-describedby="basic-addon1"
+        readonly 
+        value="<%= user.id %>"
+      >
+      </div>
+      <div class="input-group mb-2">
+        <span class="input-group-text" id="basic-addon1">Username:</span>
+        <input 
+          type="text" 
+          class="form-control" 
+          placeholder="ID"
+          aria-label="ID"
+          aria-describedby="basic-addon1"
+          readonly 
+          value="<%= user.username %>"
+        >
+        </div>
+        <div class="input-group mb-2">
+          <span class="input-group-text" id="basic-addon1">Email:</span>
+          <input 
+            type="email" 
+            class="form-control" 
+            placeholder="emails"
+            aria-label="basic-addon1"
+            aria-describedby="basic-addon1"
+            readonly 
+            value=""
+          >
+          </div>
+     
+
+      <a href="/api/user/logout">Logout</a>
+</div>
+
+
+<%- include('../port/layout-end') %>

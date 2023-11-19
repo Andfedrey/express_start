@@ -6,24 +6,22 @@ const fileMulter = require('../middleware/file')
 const router = express.Router()
 const path = require('path');
 const Books = require('../models/books')
-const books = require('../models/books')
 
 router.get('/', async (req, res) => {
   const {books} = info;
   try {
     const books = await Books.find().select('-__v')
-    res.status(200).render('book/index',{title: "Books", books })
+    res.status(200).render('book/index',{title: "Books", books, user:req.user })
   } catch (error) {
     res.status(500).json(error)
   }
-  res.status(200)
-  res.render('book/index', {title: 'Books', books})
 })
 
 router.get('/addBook', async(req, res) => {
   try {
-    res.status(200).render('book/create', {title:'add book'})
+    res.status(200).render('book/create', {title:'add book', user:req.user})
   } catch (error) {
+    
     res.status(500)
   }
 })
@@ -32,7 +30,7 @@ router.get('/:id', async(req, res) => {
   const {id} = req.params;
   try {
     const book = await Books.findById(id).select('-__v');
-    res.status(200).render('book/view', {title:"Book", book})
+    res.status(200).render('book/view', {title:"Book", book, user:req.user})
   } catch (error) {
     res.status(404).json(error)
   }
@@ -60,7 +58,7 @@ router.get('/updateBook/:id', async(req, res) => {
   const {id} = req.params;
   try {
     const book = await Books.findById(id).select('-__v');
-    res.status(200).render('book/update', {title:'update book', book})
+    res.status(200).render('book/update', {title:'update book', book, user:req.user})
   } catch (error) {
     res.status(500).json(error)
   }
@@ -80,9 +78,7 @@ router.put('/:id', async(req, res) => {
 
 router.delete('/:id', async(req, res) => {
   const {id} = req.params;
-  console.log('CHECK DELETE1')
   try {
-    console.log('CHECK DELETE2')
     await Books.deleteOne({_id: id});
     res.status(200).redirect(`/api/books`)
   } catch (error) {
