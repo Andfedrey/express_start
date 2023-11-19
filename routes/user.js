@@ -29,7 +29,6 @@ router.post('/signup', async (req, res) => {
   }
   const newUser = new User({username, password})
   try{
-    console.log('check')
     await newUser.save()
     res.status(201).redirect('user/login', {title: 'login', user: req.user})
   }catch(err){
@@ -56,7 +55,11 @@ router.get('/me',
 })
 
 router.get('/logout', (req, res) => {
-  req.logOut()
-  res.redirect('/')
+  req.logout(function(err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
 })
 module.exports = router
